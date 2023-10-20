@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.1082
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinAPI", "WinAPI\WinAPI.vcxproj", "{6A07D6F6-9E69-4806-849B-E7E48CFBC9D3}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DialogBox", "DialogBox\DialogBox.vcxproj", "{91FE125C-F0A1-43B7-8613-AAAA922F1952}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{6A07D6F6-9E69-4806-849B-E7E48CFBC9D3}.Release|x64.Build.0 = Release|x64
 		{6A07D6F6-9E69-4806-849B-E7E48CFBC9D3}.Release|x86.ActiveCfg = Release|Win32
 		{6A07D6F6-9E69-4806-849B-E7E48CFBC9D3}.Release|x86.Build.0 = Release|Win32
+		{91FE125C-F0A1-43B7-8613-AAAA922F1952}.Debug|x64.ActiveCfg = Debug|x64
+		{91FE125C-F0A1-43B7-8613-AAAA922F1952}.Debug|x64.Build.0 = Debug|x64
+		{91FE125C-F0A1-43B7-8613-AAAA922F1952}.Debug|x86.ActiveCfg = Debug|Win32
+		{91FE125C-F0A1-43B7-8613-AAAA922F1952}.Debug|x86.Build.0 = Debug|Win32
+		{91FE125C-F0A1-43B7-8613-AAAA922F1952}.Release|x64.ActiveCfg = Release|x64
+		{91FE125C-F0A1-43B7-8613-AAAA922F1952}.Release|x64.Build.0 = Release|x64
+		{91FE125C-F0A1-43B7-8613-AAAA922F1952}.Release|x86.ActiveCfg = Release|Win32
+		{91FE125C-F0A1-43B7-8613-AAAA922F1952}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
