@@ -1,14 +1,17 @@
 ﻿#define _CRT_SECURE_NO_WARNINGS
 #include<Windows.h>
+#include<vector>
+#include<string>
 #include"resource.h"
 
 #define IDC_COMBO			1001
 #define IDC_BUTTON_APPLY	1002
-CONST CHAR* g_CURSOR[] = { "Busy.ani", "Normal Select.ani", "Working In Background.ani", "Move.ani" };
+CONST CHAR* g_CURSOR[32] = { "Busy.ani", "Normal Select.ani", "Working In Background.ani", "Move.ani" };
 
 CONST CHAR g_sz_WINDOW_CLASS[] = "My Window Class";	//Имя класса окна
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+std::vector<std::string> LoadCursorsFromDirectory(const std::string& directory);
 
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, INT nCmdShow)
 {
@@ -98,12 +101,17 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			GetModuleHandle(NULL),
 			NULL
 		);
-		for (int i = 0; i < sizeof(g_CURSOR) / sizeof(g_CURSOR[0]); i++)
+		/*for (int i = 0; i < sizeof(g_CURSOR) / sizeof(g_CURSOR[0]); i++)
 		{
 			SendMessage(hCombo, CB_ADDSTRING, 0, (LPARAM)g_CURSOR[i]);
+		}*/
+		std::vector<std::string> files = LoadCursorsFromDirectory("starcraft-original\\*");
+		for (int i = 0; i < files.size(); i++)
+		{
+			if (std::string(files[i].c_str() + files[i].find_last_of('.')) == ".ani")
+				SendMessage(hCombo, CB_ADDSTRING, 0, (LPARAM)files[i].c_str());
 		}
-
-		HWND hButton = CreateWindowEx
+		HWND hButtonApply = CreateWindowEx
 		(
 			NULL,
 			"Button",
@@ -113,6 +121,19 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			100, 24,
 			hwnd,
 			(HMENU)IDC_BUTTON_APPLY,
+			GetModuleHandle(NULL),
+			NULL
+		);
+		HWND hButton = CreateWindowEx
+		(
+			NULL,
+			"Button",
+			"Button",
+			WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+			330, 10,
+			100, 24,
+			hwnd,
+			(HMENU)1003,
 			GetModuleHandle(NULL),
 			NULL
 		);
@@ -140,7 +161,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				LR_DEFAULTSIZE, LR_DEFAULTSIZE,
 				LR_LOADFROMFILE);
 			//SetCursorPos(500, 200);
-			SetClassLong(hwnd, GCL_HCURSOR, (LONG)hCursor);
+			SetClassLong(hwnd, GCL_HCURSOR, (LONG)hCursor);	//https://stackoverflow.com/questions/10277966/how-to-change-the-cursor-on-a-button
 			SetClassLong(GetDlgItem(hwnd, IDC_BUTTON_APPLY), GCL_HCURSOR, (LONG)hCursor);
 			SetClassLong(GetDlgItem(hwnd, IDC_COMBO), GCL_HCURSOR, (LONG)hCursor);
 			//SetCursor(hCursor);
@@ -155,4 +176,23 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	default:		return DefWindowProc(hwnd, uMsg, wParam, lParam);
 	}
 	return NULL;
+}
+std::vector<std::string> LoadCursorsFromDirectory(const std::string& directory)
+{
+	std::vector<std::string> files;
+	WIN32_FIND_DATA data;
+	HANDLE hFind = FindFirstFile(directory.c_str(), &data);
+	if (hFind != INVALID_HANDLE_VALUE)
+	{
+		int i = 0;
+		do
+		{
+			files.push_back(data.cFileName);
+		} while (FindNextFile(hFind, &data));
+	}
+	/*for (HANDLE hFind = FindFirstFile(directory, &data); FindNextFile(hFind, &data);)
+	{
+
+	}*/
+	return files;
 }
