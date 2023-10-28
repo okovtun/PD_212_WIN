@@ -1,5 +1,10 @@
-﻿#include<Windows.h>
+﻿#define _CRT_SECURE_NO_WARNINGS
+#include<Windows.h>
 #include"resource.h"
+
+#define IDC_COMBO			1001
+#define IDC_BUTTON_APPLY	1002
+CONST CHAR* g_CURSOR[] = { "Busy.ani", "Normal Select.ani", "Working In Background.ani", "Move.ani" };
 
 CONST CHAR g_sz_WINDOW_CLASS[] = "My Window Class";	//Имя класса окна
 
@@ -19,9 +24,10 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, IN
 
 	//wc.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON_CPU));
 	//wc.hIconSm = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON_RAM));	//Sm - Small
-	wc.hIcon =   (HICON)LoadImage(hInstance, "palm.ico", IMAGE_ICON, LR_DEFAULTSIZE, LR_DEFAULTSIZE, LR_LOADFROMFILE);
+	//wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wc.hIcon = (HICON)LoadImage(hInstance, "palm.ico", IMAGE_ICON, LR_DEFAULTSIZE, LR_DEFAULTSIZE, LR_LOADFROMFILE);
 	wc.hIconSm = (HICON)LoadImage(hInstance, "star.ico", IMAGE_ICON, LR_DEFAULTSIZE, LR_DEFAULTSIZE, LR_LOADFROMFILE);
-	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+	//wc.hCursor = (HCURSOR)LoadImage(hInstance, "star.ani", IMAGE_CURSOR, LR_DEFAULTSIZE, LR_DEFAULTSIZE, LR_LOADFROMFILE);
 	wc.hbrBackground = HBRUSH(COLOR_WINDOW + 1);
 
 	wc.hInstance = hInstance;	//hInstance - это экземпляр исполняемого файла программы в памяти
@@ -74,12 +80,76 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, IN
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+	static HCURSOR hCursor;
 	switch (uMsg)
 	{
 	case WM_CREATE:
-		break;
+	{
+		HWND hCombo = CreateWindowEx
+		(
+			NULL,
+			"ComboBox",
+			"",
+			WS_CHILD | WS_VISIBLE | CBN_DROPDOWN,
+			10, 10,
+			200, 200,
+			hwnd,
+			(HMENU)IDC_COMBO,
+			GetModuleHandle(NULL),
+			NULL
+		);
+		for (int i = 0; i < sizeof(g_CURSOR) / sizeof(g_CURSOR[0]); i++)
+		{
+			SendMessage(hCombo, CB_ADDSTRING, 0, (LPARAM)g_CURSOR[i]);
+		}
+
+		HWND hButton = CreateWindowEx
+		(
+			NULL,
+			"Button",
+			"Apply",
+			WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+			220, 10,
+			100, 24,
+			hwnd,
+			(HMENU)IDC_BUTTON_APPLY,
+			GetModuleHandle(NULL),
+			NULL
+		);
+
+	}
+	break;
 	case WM_COMMAND:
+	{
+		switch (LOWORD(wParam))
+		{
+		case IDC_BUTTON_APPLY:
+		{
+			HWND hCombo = GetDlgItem(hwnd, IDC_COMBO);
+			int i = SendMessage(hCombo, CB_GETCURSEL, 0, 0);
+			CHAR sz_filename[_MAX_FNAME]{};
+			CHAR sz_filepath[_MAX_PATH] = "starcraft-original\\";
+			SendMessage(hCombo, CB_GETLBTEXT, i, (LPARAM)sz_filename);
+			strcat(sz_filepath, sz_filename);
+			//MessageBox(hwnd, sz_filepath, "Info", MB_OK);
+			//HCURSOR 
+			hCursor = (HCURSOR)LoadImage(
+				GetModuleHandle(NULL),
+				sz_filepath,
+				IMAGE_CURSOR,
+				LR_DEFAULTSIZE, LR_DEFAULTSIZE,
+				LR_LOADFROMFILE);
+			//SetCursorPos(500, 200);
+			SetClassLong(hwnd, GCL_HCURSOR, (LONG)hCursor);
+			SetClassLong(GetDlgItem(hwnd, IDC_BUTTON_APPLY), GCL_HCURSOR, (LONG)hCursor);
+			SetClassLong(GetDlgItem(hwnd, IDC_COMBO), GCL_HCURSOR, (LONG)hCursor);
+			//SetCursor(hCursor);
+			return FALSE;
+		}
 		break;
+		}
+	}
+	break;
 	case WM_DESTROY:PostQuitMessage(0); break;
 	case WM_CLOSE:	DestroyWindow(hwnd); break;
 	default:		return DefWindowProc(hwnd, uMsg, wParam, lParam);

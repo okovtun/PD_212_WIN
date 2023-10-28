@@ -11,7 +11,7 @@ TODO:
 
 2. Скачать еще две иконки в формате !!!!!*.ICO!!!!!, и загрузить их БЕЗ использования файла ресурсов;
    Загрузить анимированный указатель мыши:
-	http://www.rw-designer.com/cursor-set/starcraft-original	DONE
+	http://www.rw-designer.com/cursor-set/starcraft-original
    TOREAD: ExtractIcon(...);
 
 3. Окно должно занимать ровно 3/4 экрана, и его размер при запуске должен адаптироваться под размер экрана;	DONE
