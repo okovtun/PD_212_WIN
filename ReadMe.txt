@@ -2,6 +2,9 @@
 https://www.youtube.com/playlist?list=PLeqyOOqxeiIMqz9yEX2G4Jjeqy2NBTsZV
 
 TODO:
+Организовать вычисления;
+
+DONE:
 В Solution 'WinAPI' добавить проект 'Calc', и в нем реализовать калькулятор, 
 выполняющий простейшие операции над дробными числами: +, -, *, /;
 
