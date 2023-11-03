@@ -2,6 +2,10 @@
 https://www.youtube.com/playlist?list=PLeqyOOqxeiIMqz9yEX2G4Jjeqy2NBTsZV
 
 TODO:
+1. Сделать иконку для калькулятора;
+2. Сделать иконки для кнопок;
+
+DONE:
 Организовать вычисления;
 
 DONE:
