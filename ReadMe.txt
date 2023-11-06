@@ -2,6 +2,9 @@
 https://www.youtube.com/playlist?list=PLeqyOOqxeiIMqz9yEX2G4Jjeqy2NBTsZV
 
 TODO:
+Добавить темы "square_gree" и "round_green", переключение между темами должно происходить через контекстное меню.
+
+DONE:
 1. Сделать иконку для калькулятора;
 2. Сделать иконки для кнопок;
 
