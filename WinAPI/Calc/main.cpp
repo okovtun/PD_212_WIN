@@ -92,6 +92,9 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	static INT operation = 0;
 	static BOOL input = false;	//отследивает ввод чисел
 	static BOOL input_operation = false;	//отслеживает ввод операции
+
+	static CHAR sz_skin[MAX_PATH] = "square_blue";
+	static COLORREF crBackground = RGB(0, 0, 255);
 	switch (uMsg)
 	{
 	case WM_CREATE:
@@ -218,6 +221,16 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		SetSkin(hwnd, "square_blue");
 	}
 	break;
+	case WM_PAINT:
+	{
+		HBRUSH hbrBackground = CreateSolidBrush(crBackground);
+		PAINTSTRUCT ps;
+		HDC hdc = BeginPaint(hwnd, &ps);
+		FillRect(ps.hdc, &ps.rcPaint, hbrBackground);
+		EndPaint(hwnd, &ps);
+		UpdateWindow(hwnd);
+	}
+		break;
 	case WM_CTLCOLOREDIT:
 	{
 		HDC hdc = (HDC)wParam;
@@ -333,6 +346,26 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		}
 	}
 	break;
+	case WM_CONTEXTMENU:
+	{
+		HMENU hMenu = CreatePopupMenu();
+		InsertMenu(hMenu, 0, MF_BYPOSITION | MF_STRING, IDC_EXIT, "Exit");
+		InsertMenu(hMenu, 0, MF_BYPOSITION | MF_SEPARATOR, 0, NULL);
+		InsertMenu(hMenu, 0, MF_BYPOSITION | MF_STRING, IDC_SQUARE_BLUE, "Square blue");
+		InsertMenu(hMenu, 0, MF_BYPOSITION | MF_STRING, IDC_SQUARE_GREEN, "Square green");
+		InsertMenu(hMenu, 0, MF_BYPOSITION | MF_STRING, IDC_ROUND_GREEN, "Round green");
+		HBRUSH hbrBackground = CreateSolidBrush(RGB(0, 0, 240));
+		switch (TrackPopupMenuEx(hMenu, TPM_BOTTOMALIGN | TPM_LEFTALIGN | TPM_RETURNCMD, LOWORD(lParam), HIWORD(lParam), hwnd, NULL))
+		{
+		case IDC_SQUARE_BLUE:	strcpy(sz_skin, "square_blue");	 hbrBackground = CreateSolidBrush(RGB(0, 0, 240));	break;
+		case IDC_SQUARE_GREEN:	strcpy(sz_skin, "square_green"); hbrBackground = CreateSolidBrush(RGB(0, 240, 0));	break;
+		case IDC_ROUND_GREEN:	strcpy(sz_skin, "round_green");	 hbrBackground = CreateSolidBrush(RGB(0, 240, 0));	break;
+		case IDC_EXIT: SendMessage(hwnd, WM_CLOSE, 0, 0); break;
+		}
+		SetSkin(hwnd, sz_skin);
+		SetClassLongPtr(hwnd, GCLP_HBRBACKGROUND, (LONG_PTR)hbrBackground);
+	}
+	break;
 	case WM_DESTROY:PostQuitMessage(0); break;
 	case WM_CLOSE:	DestroyWindow(hwnd); break;
 	default:		return DefWindowProc(hwnd, uMsg, wParam, lParam); break;
@@ -346,7 +379,7 @@ VOID SetSkin(HWND hwnd, CONST CHAR sz_skin[])
 	for (int i = 0; i < SIZE; i++)
 	{
 		HWND hButton = GetDlgItem(hwnd, IDC_BUTTON_0 + i);	//1) Получаем окно кнопки
-		sprintf(sz_filename, "ButtonsBMP\\square_blue\\button_%i.bmp", i);
+		sprintf(sz_filename, "ButtonsBMP\\%s\\button_%i.bmp", sz_skin, i);
 		HBITMAP hBitmap = (HBITMAP)LoadImage	//Загружаем картинку значка в память
 		(
 			GetModuleHandle(NULL),
@@ -360,7 +393,7 @@ VOID SetSkin(HWND hwnd, CONST CHAR sz_skin[])
 	for (int i = 0; i < sizeof(BUTTON_NAMES) / sizeof(BUTTON_NAMES[0]); i++)
 	{
 		HWND hButton = GetDlgItem(hwnd, IDC_BUTTON_POINT + i);	//1) Получаем окно кнопки
-		sprintf(sz_filename, "ButtonsBMP\\square_blue\\button_%s.bmp", BUTTON_NAMES[i]);
+		sprintf(sz_filename, "ButtonsBMP\\%s\\button_%s.bmp", sz_skin, BUTTON_NAMES[i]);
 		HBITMAP hBitmap = (HBITMAP)LoadImage	//Загружаем картинку значка в память
 		(
 			GetModuleHandle(NULL),
