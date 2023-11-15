@@ -5,7 +5,11 @@ TODO:
 1. При открытии окна 'Font', в выпадающем списке уже должен быть выьран текущий шрифт,	DONE
    а в счетчике 'размер шрифта' должен быть размет текущего шрифта;
 2. При следующем запуске программы, шрифт и размер шрифта должны сохраняться;
+	https://stackoverflow.com/questions/457671/c-sharp-how-do-i-save-runtime-font-settings
 3. При следующем запуске программы, цвет текста и фона так же дожны сохраняться;
+	https://stackoverflow.com/questions/22437558/load-and-save-color-value
+4. Установить QtCreator!!!
+	MVC - Model View Controller
 
 DONE:
 Добавить в часы кастомные шрифты;

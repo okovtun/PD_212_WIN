@@ -81,6 +81,7 @@
 			this.numericUpDownFontSize.Name = "numericUpDownFontSize";
 			this.numericUpDownFontSize.Size = new System.Drawing.Size(44, 20);
 			this.numericUpDownFontSize.TabIndex = 4;
+			this.numericUpDownFontSize.ValueChanged += new System.EventHandler(this.numericUpDownFontSize_ValueChanged);
 			// 
 			// Font
 			// 
