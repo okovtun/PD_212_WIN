@@ -1,6 +1,9 @@
 ﻿https://github.com/okovtun/PD_212_WIN.git
 https://www.youtube.com/playlist?list=PLeqyOOqxeiIMqz9yEX2G4Jjeqy2NBTsZV
 
+Qt:
+https://drive.google.com/drive/folders/1nJUXS1MzBZzO6m9dcGMua-_poyvrlTMp?usp=sharing
+
 TODO:
 1. При открытии окна 'Font', в выпадающем списке уже должен быть выьран текущий шрифт,	DONE
    а в счетчике 'размер шрифта' должен быть размет текущего шрифта;
