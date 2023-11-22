@@ -1,2 +1,7 @@
-<!DOCTYPE RCC>
-<RCC version="1.0"/>
+<RCC>
+    <qresource prefix="/ico">
+        <file>ico/preferences_desktop_sound_16925.ico</file>
+        <file>ico/sound_icon-icons.com_74449.ico</file>
+        <file>ico/volume_player_sound_audio_1079.ico</file>
+    </qresource>
+</RCC>
