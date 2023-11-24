@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
@@ -38,6 +39,10 @@ public:
     QLabel *labelDuration;
     QPushButton *pushButtonMute;
     QTableView *tableViewPlaylist;
+    QCheckBox *checkBoxLoop;
+    QCheckBox *checkBoxShuffle;
+    QPushButton *pushButtonCLR;
+    QPushButton *pushButtonDEL;
 
     void setupUi(QWidget *Widget)
     {
@@ -91,6 +96,18 @@ public:
         tableViewPlaylist = new QTableView(Widget);
         tableViewPlaylist->setObjectName(QString::fromUtf8("tableViewPlaylist"));
         tableViewPlaylist->setGeometry(QRect(45, 171, 721, 361));
+        checkBoxLoop = new QCheckBox(Widget);
+        checkBoxLoop->setObjectName(QString::fromUtf8("checkBoxLoop"));
+        checkBoxLoop->setGeometry(QRect(620, 560, 72, 19));
+        checkBoxShuffle = new QCheckBox(Widget);
+        checkBoxShuffle->setObjectName(QString::fromUtf8("checkBoxShuffle"));
+        checkBoxShuffle->setGeometry(QRect(690, 560, 72, 19));
+        pushButtonCLR = new QPushButton(Widget);
+        pushButtonCLR->setObjectName(QString::fromUtf8("pushButtonCLR"));
+        pushButtonCLR->setGeometry(QRect(130, 560, 80, 21));
+        pushButtonDEL = new QPushButton(Widget);
+        pushButtonDEL->setObjectName(QString::fromUtf8("pushButtonDEL"));
+        pushButtonDEL->setGeometry(QRect(220, 560, 80, 21));
 
         retranslateUi(Widget);
 
@@ -111,6 +128,10 @@ public:
         labelProgress->setText(QCoreApplication::translate("Widget", "Progress", nullptr));
         labelDuration->setText(QCoreApplication::translate("Widget", "Duration:", nullptr));
         pushButtonMute->setText(QString());
+        checkBoxLoop->setText(QCoreApplication::translate("Widget", "Loop", nullptr));
+        checkBoxShuffle->setText(QCoreApplication::translate("Widget", "Shuffle", nullptr));
+        pushButtonCLR->setText(QCoreApplication::translate("Widget", "CLR", nullptr));
+        pushButtonDEL->setText(QCoreApplication::translate("Widget", "DEL", nullptr));
     } // retranslateUi
 
 };
