@@ -49,6 +49,8 @@ public:
         if (Widget->objectName().isEmpty())
             Widget->setObjectName(QString::fromUtf8("Widget"));
         Widget->resize(800, 600);
+        Widget->setMinimumSize(QSize(800, 600));
+        Widget->setMaximumSize(QSize(800, 600));
         QIcon icon;
         icon.addFile(QString::fromUtf8(":/ico/ico/preferences_desktop_sound_16925.ico"), QSize(), QIcon::Normal, QIcon::Off);
         Widget->setWindowIcon(icon);
