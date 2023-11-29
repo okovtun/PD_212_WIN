@@ -21,6 +21,8 @@ public:
 	void load_playlist(QString filename);
 	void save_playlist(QString filename);
 
+	void load_cue_playlist(QString filename);
+
 private slots:
 	void on_pushButtonOpen_clicked();
 
